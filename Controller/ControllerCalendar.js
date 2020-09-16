@@ -33,7 +33,7 @@ async function addTodoDay(req) {
       const email = req.body.email.split('@')
 
       const responseCalendar = await db
-        .ref(`Calendar/Users/${email}`)
+        .ref(`Calendar/Users/${email[0]}`)
         .once("value", (data) => {
           return data.val();
         });
@@ -53,14 +53,14 @@ async function addTodoDay(req) {
       }
       if (alreadyExist) {
         responseDelete = await db
-          .ref(`Calendar/Users/${email}/${idDelete}`)
+          .ref(`Calendar/Users/${email[0]}/${idDelete}`)
           .remove();
         return {
           status: 204,
         };
       } else {
         response = await db
-          .ref(`Calendar/Users/${email}`)
+          .ref(`Calendar/Users/${email[0]}`)
           .push(req.body);
         return {
           status: 200,
@@ -100,7 +100,7 @@ async function setDayTodo(req) {
         const email = req.body.email.split('@')
 
         const calendarList = await db
-          .ref(`Calendar/Users/${email}`)
+          .ref(`Calendar/Users/${email[0]}`)
           .once("value", (data) => {
             return data.val();
           });
