@@ -68,7 +68,9 @@ async function addTodoList(req) {
 
       const todo = req.body.todo;
 
-      const response = await db.ref(`List/Users/${req.body.email}`).push(todo);
+      const email = req.body.email.split('@')
+
+      const response = await db.ref(`List/Users/${email}`).push(todo);
 
       console.log(response.path);
 
@@ -109,9 +111,9 @@ async function deleteTodoList(req) {
       });
 
       const id = req.body.id;
-      const email = req.body.email;
-
       console.log(email);
+
+      const email = req.body.email.split('@')
 
       const response = await db.ref(`List/Users/${email}/${id}`).remove();
 
