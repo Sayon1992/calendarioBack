@@ -25,8 +25,10 @@ async function getTodoList(req) {
           }
         });
 
+        const email = req.body.email.split('@')
+
         const list = await db
-          .ref(`List/Users/${req.body.email}`)
+          .ref(`List/Users/${email[0]}`)
           .once("value", (data) => {
             return data.val();
           });
